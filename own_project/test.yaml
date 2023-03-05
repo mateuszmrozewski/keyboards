@@ -1,0 +1,49 @@
+points:
+  zones:
+    matrix:
+      columns:
+        outer:
+        pinky:
+        ring:
+        middle:
+        index:
+        inner:
+      rows:
+        top:
+        home:
+        bottom:
+    thumb:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-1U, -3U]
+      columns:
+        inner:
+        middle:
+        outer:
+  mirror:
+    ref: thumb_outer
+    distance: 1U
+outlines:    
+  raw:
+    - what: rectangle
+      size: [14.5U,4.5U]
+      fillet: 5
+      where:
+        ref: matrix_outer_top
+        shift: [6.5U, 0.5U]
+  switch_cutouts:
+    - what: rectangle
+      where: true
+      asym: left
+      size: 14
+      bound: false
+  switch_plate:
+    main:
+      what: outline
+      name: raw
+      fillet: 0.5
+    keyholes:
+      what: outline
+      name: switch_cutouts
+      operation: subtract
+

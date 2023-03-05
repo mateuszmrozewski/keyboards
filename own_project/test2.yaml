@@ -1,0 +1,138 @@
+points:
+  zones:
+    matrix:
+      columns:
+        outer:
+          key:
+            column_net: P21
+            mirror.column_net: P1
+        pinky:
+          key:
+            column_net: P20
+            mirror.column_net: P0
+        ring:
+          key:
+            column_net: P19
+            mirror.column_net: P2
+        middle:
+          key:
+            column_net: P18
+            mirror.column_net: P3
+        index:
+          key:
+            column_net: P15
+            mirror.column_net: P4
+        inner:
+          key:
+            column_net: P14
+            mirror.column_net: P5
+      rows:
+        bottom:
+          row_net: P8     
+        home:
+          row_net: P7
+        top:
+          row_net: P6
+    thumb:
+      anchor:
+        ref: matrix_inner_bottom
+        shift: [-1U, -1U]
+      columns:
+        inner:
+          key:
+            row_net: P9
+            column_net: P18
+            mirror.column_net: P3
+        middle:
+          key:
+            row_net: P9
+            column_net: P15
+            mirror.column_net: P4
+        outer:
+          key:
+            row_net: P9
+            column_net: P14
+            mirror.column_net: P5
+  mirror:
+    ref: thumb_outer
+    distance: 1U
+  key:
+    bind: 2
+outlines:    
+  raw:
+    - what: rectangle
+      size: [14.2U,4.2U]
+      fillet: 3
+      where:
+        ref: matrix_outer_top
+        shift: [6.5U, -1.5U]
+  switch_cutouts:
+    - what: rectangle
+      where: true
+      asym: left
+      size: 14
+      bound: false
+  switch_plate:
+    main:
+      what: outline
+      name: raw
+      fillet: 0.5
+    keyholes:
+      what: outline
+      name: switch_cutouts
+      operation: subtract
+pcbs:
+  main:
+    outlines:
+      main:
+        outline: raw
+    footprints:
+      keys:
+        what: mx
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{column_net}}"
+          keycaps: true
+          hotswap: true
+      diodes:
+        what: diode
+        where: true
+        adjust:
+          shift: [0, -4.7]
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+          #through_hole: false
+      promicro:
+        what: promicro
+        where:
+          aggregate.parts:
+            - ref: matrix_inner_top
+            - ref: mirror_matrix_inner_top
+          shift: [0, -8]
+          rotate: -90
+        params:
+          orientation: down
+      reset:
+        what: button
+        where:
+          ref:
+            - matrix_ring_home
+          shift: [-0.7u, 0]
+          rotate: 90
+        params:
+          from: RST
+          to: GND
+      resetbottom:
+        what: button
+        where:
+          ref:
+            - matrix_ring_home
+          shift: [-0.7u, 0]
+          rotate: 90
+        params:
+          from: RST
+          to: GND
+          side: B
+
